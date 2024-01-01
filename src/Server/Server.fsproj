@@ -6,8 +6,6 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AuthApi/login.fs" />
-    <Compile Include="AuthApi/logout.fs" />
     <Compile Include="AuthApi/Authentication.fs" />
     <Compile Include="PersonApi/Person.fs" />
     <Compile Include="GiftApi/Gift.fs" />
