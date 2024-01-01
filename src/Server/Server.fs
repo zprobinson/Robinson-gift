@@ -39,103 +39,19 @@ let webApp =
     |> Remoting.fromValue todosApi
     |> Remoting.buildHttpHandler
 
-let authProtocol: IAuthApi =
-    { login = fun _ -> async { return None }
-      logout = fun _ -> async { return () } }
-
 let authApi =
     Remoting.createApi ()
-    |> Remoting.fromValue authProtocol
+    |> Remoting.fromValue AuthApi.authProtocol
     |> Remoting.buildHttpHandler
-
-let personProtocol: IPersonApi =
-    { getPeople = fun _ -> async { return [] }
-      getPerson = fun _ -> async { return None }
-      addPerson =
-        fun _ -> async {
-            return
-                { Id = Guid.Empty
-                  FirstName = ""
-                  LastName = ""
-                  Birthday = DateOnly.MinValue }
-        }
-      updatePerson =
-        fun _ -> async {
-            return
-                { Id = Guid.Empty
-                  FirstName = ""
-                  LastName = ""
-                  Birthday = DateOnly.MinValue }
-        }
-      deletePerson = fun _ -> async { return () } }
 
 let personApi =
     Remoting.createApi ()
-    |> Remoting.fromValue personProtocol
+    |> Remoting.fromValue PersonApi.personProtocol
     |> Remoting.buildHttpHandler
-
-let giftProtocol: IGiftApi =
-    { gifts = fun _ -> async { return [] }
-      gift = fun _ -> async { return None }
-      addGift =
-        fun _ -> async {
-            return
-                { Id = Guid.Empty
-                  Person =
-                    { Id = Guid.Empty
-                      FirstName = ""
-                      LastName = ""
-                      Birthday = DateOnly.MinValue }
-                  Name = ""
-                  Description = None
-                  Url = None
-                  Image = [||]
-                  Price = None }
-        }
-      updateGift =
-        fun _ -> async {
-            return
-                { Id = Guid.Empty
-                  Person =
-                    { Id = Guid.Empty
-                      FirstName = ""
-                      LastName = ""
-                      Birthday = DateOnly.MinValue }
-                  Name = ""
-                  Description = None
-                  Url = None
-                  Image = [||]
-                  Price = None }
-        }
-      deleteGift = fun _ -> async { return () }
-      reserveGift =
-        fun _ -> async {
-            return
-                { Id = Guid.Empty
-                  Gift =
-                    { Id = Guid.Empty
-                      Person =
-                        { Id = Guid.Empty
-                          FirstName = ""
-                          LastName = ""
-                          Birthday = DateOnly.MinValue }
-                      Name = ""
-                      Description = None
-                      Url = None
-                      Image = [||]
-                      Price = None }
-                  ReservedBy =
-                    { Id = Guid.Empty
-                      FirstName = ""
-                      LastName = ""
-                      Birthday = DateOnly.MinValue }
-                  ReservedAt = DateTimeOffset.MinValue }
-        }
-      unreserveGift = fun _ -> async { return () } }
 
 let giftApi =
     Remoting.createApi ()
-    |> Remoting.fromValue giftProtocol
+    |> Remoting.fromValue GiftApi.giftProtocol
     |> Remoting.buildHttpHandler
 
 let app = application {
