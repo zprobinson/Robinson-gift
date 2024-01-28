@@ -13,7 +13,10 @@ type Msg =
     | Logout
     | UserLoggedOut
 
-let authApi = Remoting.createApi () |> Remoting.buildProxy<IAuthApi>
+let authApi =
+    Remoting.createApi ()
+    |> Remoting.withRouteBuilder Route.builder
+    |> Remoting.buildProxy<IAuthApi>
 
 let init () =
     let model = { User = None; Input = "" }
@@ -22,8 +25,12 @@ let init () =
 let update msg model =
     match msg with
     | SetInput input -> { model with Input = input }, Cmd.none
-    | Login person -> model, Cmd.OfAsync.perform authApi.login person UserLoggedIn
-    | UserLoggedIn user -> { model with User = user }, Cmd.none
+    | Login person ->
+        Browser.Dom.console.log ("login", [| person |])
+        model, Cmd.OfAsync.perform authApi.login person UserLoggedIn
+    | UserLoggedIn user ->
+        Browser.Dom.console.log ("user logged in", [| user |])
+        { model with User = user }, Cmd.none
     | Logout -> model, Cmd.OfAsync.perform authApi.logout () (fun _ -> UserLoggedOut)
     | UserLoggedOut -> { model with User = None }, Cmd.none
 
@@ -47,7 +54,11 @@ let private todoAction (model: Model) dispatch =
                     [ prop.className
                           "flex-no-shrink p-2 px-12 rounded bg-teal-600 outline-none focus:ring-2 ring-teal-300 font-bold text-white hover:bg-teal disabled:opacity-30 disabled:cursor-not-allowed"
                       prop.disabled (false)
-                      prop.onClick (fun _ -> Browser.Dom.console.log "add button clicked")
+                      prop.onClick (fun _ ->
+                          Login
+                              { Name = model.Input
+                                Password = "password" }
+                          |> dispatch)
                       prop.text "Add" ] ] ]
 
 let private todoList model dispatch =

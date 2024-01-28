@@ -5,7 +5,14 @@ open Shared
 open Microsoft.Extensions.Logging
 
 type PersonApi(logger: ILogger<PersonApi>) =
-    member this.getPerson id = async { return None }
+    member this.getPerson id = async {
+        return
+            Some
+                { Id = System.Guid.NewGuid()
+                  FirstName = "Zach"
+                  LastName = "Robinson"
+                  Birthday = System.DateOnly.MinValue }
+    }
 
     member this.getPeople() = async { return [] }
 
