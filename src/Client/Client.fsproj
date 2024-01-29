@@ -8,10 +8,10 @@
     <Compile Include="Server.fs" />
     <Compile Include="Domain.fs" />
     <Compile Include="State.fs" />
+    <Compile Include="Components/Navbar/Navbar.fs" />
     <Compile Include="Pages/Login/Domain.fs" />
     <Compile Include="Pages/Login/State.fs" />
     <Compile Include="Pages/Login/View.fs" />
-    <Compile Include="Layout.fs" />
     <None Include="postcss.config.js" />
     <None Include="tailwind.config.js" />
     <None Include="index.html" />

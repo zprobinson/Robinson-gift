@@ -3,8 +3,17 @@ module Gift.Client.State
 open Elmish
 open Domain
 
-let init () = { Empty = () }, Cmd.none
+let init () =
+    { Page = CurrentPage.Home; User = None }, Cmd.none
 
 let update (msg: Msg) (model: Model) : Model * Cmd<Msg> =
     match msg with
-    | Empty -> model, Cmd.none
+    | Navigate page -> { model with Page = page }, Cmd.none
+
+    | Login -> { model with User = Some "test" }, Cmd.none
+
+    | Logout ->
+        { model with
+            User = None
+            Page = CurrentPage.Home },
+        Cmd.none

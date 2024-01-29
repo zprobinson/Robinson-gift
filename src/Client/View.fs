@@ -1,6 +1,6 @@
 module Gift.Client.View
 
 open Domain
-open Gift.Client.Pages
+open Gift.Client.Components
 
-let render (model: Model) (dispatch: Msg -> unit) = Layout.view ()
+let render (model: Model) (dispatch: Msg -> unit) = Navbar.Navbar model dispatch

@@ -2,10 +2,21 @@ module Gift.Client.Domain
 
 type CurrentPage =
     | Home
-    | Login
     | MyGifts
     | Family
 
-type Model = { Empty: unit }
+    static member fromString(s: string) =
+        match s.ToLower() with
+        | "home" -> Home
+        | "mygifts" -> MyGifts
+        | "family" -> Family
+        | _ -> failwithf "Unknown page: %s" s
 
-type Msg = Empty
+type Model =
+    { Page: CurrentPage
+      User: string option }
+
+type Msg =
+    | Navigate of CurrentPage
+    | Login
+    | Logout
