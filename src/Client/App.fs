@@ -1,31 +1,19 @@
 module App
 
-open Browser
-open Feliz
-
 open Elmish
-open Elmish.React
+open Gift.Client
 
-open Fable.Core.JsInterop
-
-importSideEffects "./index.css"
+Fable.Core.JsInterop.importSideEffects "./index.css"
 
 #if DEBUG
 open Elmish.Debug
 open Elmish.HMR
-open Gift.Client.Pages
 #endif
 
-ReactDOM.createRoot (document.getElementById "root")
-|> fun x -> x.render (Layout.view ())
-// |> fun x -> x.render (Index.View())
-
-// Program.mkProgram Index.init Index.update Index.view
-// #if DEBUG
-// |> Program.withConsoleTrace
-// #endif
-// |> Program.withReactSynchronous "elmish-app"
-// #if DEBUG
-// |> Program.withDebugger
-// #endif
-// |> Program.run
+Program.mkProgram State.init State.update View.render
+|> Program.withReactSynchronous "root"
+#if DEBUG
+|> Program.withConsoleTrace
+|> Program.withDebugger
+#endif
+|> Program.run
