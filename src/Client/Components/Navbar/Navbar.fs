@@ -37,21 +37,11 @@ let private NavLink (dispatch: Msg -> unit) (text: string) active =
            prop.children[Html.text text]]
 
 [<ReactComponent>]
-let private AuthButton model dispatch =
-    let action =
-        match model.User with
-        | Some _ -> Logout
-        | None -> Login
-
-    let text =
-        match model.User with
-        | Some _ -> "Logout"
-        | None -> "Login"
-
+let private LogoutButton model dispatch =
     Html.button
         [ prop.className inactiveNavStyle
-          prop.onClick (fun _ -> dispatch action)
-          prop.text text ]
+          prop.onClick (fun _ -> dispatch Logout)
+          prop.text "Logout" ]
 
 [<ReactComponent>]
 let Navbar (model: Model) (dispatch: Msg -> unit) =
@@ -66,8 +56,11 @@ let Navbar (model: Model) (dispatch: Msg -> unit) =
         |> List.map (fun (name, active) -> NavLink dispatch name active)
 
     let authButton =
-        Html.div
-            [ prop.className "flex flex-1 items-center justify-end"
-              prop.children [ AuthButton model dispatch ] ]
+        match currentUser with
+        | Some _ ->
+            Html.div
+                [ prop.className "flex flex-1 items-center justify-end"
+                  prop.children [ LogoutButton model dispatch ] ]
+        | None -> React.fragment []
 
     Template links authButton
