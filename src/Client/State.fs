@@ -10,7 +10,11 @@ let update (msg: Msg) (model: Model) : Model * Cmd<Msg> =
     match msg with
     | Navigate page -> { model with Page = page }, Cmd.none
 
-    | Login -> { model with User = Some "test" }, Cmd.none
+    | Login ->
+        { model with
+            User = Some "test"
+            Page = CurrentPage.MyGifts },
+        Cmd.none
 
     | Logout ->
         { model with
