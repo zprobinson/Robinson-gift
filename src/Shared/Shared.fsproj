@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Result.fs" />
     <Compile Include="Person.fs" />
     <Compile Include="Gift.fs" />
     <Compile Include="Authentication.fs" />
