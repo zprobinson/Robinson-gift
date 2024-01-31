@@ -14,9 +14,14 @@ type CurrentPage =
 
 type Model =
     { Page: CurrentPage
-      User: string option }
+      User: string option
+      (* Login Page *)
+      LoginLoading: bool
+      LoginError: string option }
 
 type Msg =
     | Navigate of CurrentPage
-    | Login
+    | Login of string * string
+    | LoginSucceeded of string
+    | LoginFailed of string
     | Logout
