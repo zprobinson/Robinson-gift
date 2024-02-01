@@ -9,6 +9,10 @@ type Person =
       LastName: string
       Birthday: DateOnly }
 
+module Person =
+    let name (person: Person) =
+        sprintf "%s %s" person.FirstName person.LastName
+
 type IPersonApi =
     { getPeople: unit -> Async<Person list>
       getPerson: string -> Async<Person option>

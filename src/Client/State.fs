@@ -2,6 +2,7 @@ module Gift.Client.State
 
 open Elmish
 open Domain
+open Server
 
 let init () =
     { Page = CurrentPage.Home
@@ -17,22 +18,20 @@ let update (msg: Msg) (model: Model) : Model * Cmd<Msg> =
     | Login(username, password) ->
         { model with LoginLoading = true },
         Cmd.OfAsync.either
-            (fun (username: string, password: string) -> async {
-                do! Async.Sleep 1000
-
-                match password with
-                | "password" -> return username
-                | _ -> return invalidOp "Yo dawg, that ain't right"
-            })
-            (username, password)
-            (fun name -> LoginSucceeded name)
+            authApi.login
+            { Name = username; Password = password }
+            (fun response ->
+                match response with
+                | Ok person -> LoginSucceeded person
+                | Error err -> LoginFailed err)
             (fun exn -> LoginFailed exn.Message)
 
-    | LoginSucceeded username ->
+    | LoginSucceeded person ->
         { model with
-            User = Some username
+            User = Some person
             Page = CurrentPage.Home
-            LoginLoading = false },
+            LoginLoading = false
+            LoginError = None },
         Cmd.none
 
     | LoginFailed err ->

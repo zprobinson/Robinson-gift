@@ -3,11 +3,12 @@ module Gift.Client.View
 open Feliz
 open Domain
 open Gift.Client.Components
+open Shared
 
 let render (model: Model) (dispatch: Msg -> unit) =
     let activePage =
         match model.Page, model.User with
-        | Home, Some user -> "Home: You are logged in as " + user |> Html.text
+        | Home, Some user -> "Home: You are logged in as " + (user |> Person.name) |> Html.text
 
         | MyGifts, Some user -> "MyGifts" |> Html.text
 

@@ -10,12 +10,17 @@ type AuthApi() =
         { Id = Guid.NewGuid()
           FirstName = "Zach"
           LastName = "Robinson"
-          Birthday = DateOnly.Parse "1991-01-17" }
+          Birthday = DateOnly(1991, 01, 17) }
 
     member this.login =
-        fun _ -> async {
-            printfn "server login hit"
-            return Some testUser
+        fun command -> async {
+            match command.Password.ToLower() with
+            | "password" ->
+                return
+                    ({ testUser with
+                        FirstName = command.Name }
+                     |> Ok)
+            | _ -> return Error "Invalid username or password"
         }
 
     member this.logout = fun _ -> async { return () }

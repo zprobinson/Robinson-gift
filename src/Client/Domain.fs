@@ -1,5 +1,7 @@
 module Gift.Client.Domain
 
+open Shared
+
 type CurrentPage =
     | Home
     | MyGifts
@@ -14,7 +16,7 @@ type CurrentPage =
 
 type Model =
     { Page: CurrentPage
-      User: string option
+      User: Person option
       (* Login Page *)
       LoginLoading: bool
       LoginError: string option }
@@ -22,6 +24,6 @@ type Model =
 type Msg =
     | Navigate of CurrentPage
     | Login of string * string
-    | LoginSucceeded of string
+    | LoginSucceeded of Person
     | LoginFailed of string
     | Logout
