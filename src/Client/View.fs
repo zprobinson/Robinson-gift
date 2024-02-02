@@ -8,7 +8,7 @@ open Shared
 let render (model: Model) (dispatch: Msg -> unit) =
     let activePage =
         match model.Page, model.User with
-        | Home, Some user -> "Home: You are logged in as " + (user |> Person.name) |> Html.text
+        | Home, Some user -> Pages.Home.View.Home user model dispatch
 
         | MyGifts, Some user -> "MyGifts" |> Html.text
 

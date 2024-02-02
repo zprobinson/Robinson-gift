@@ -9,7 +9,9 @@ let init () =
       User = None
       LoginError = None
       LoginLoading = false },
-    Cmd.none
+    Cmd.OfAsync.perform authApi.login { Name = "Zach"; Password = "password" } (function
+        | Ok person -> LoginSucceeded person
+        | Error err -> LoginFailed err)
 
 let update (msg: Msg) (model: Model) : Model * Cmd<Msg> =
     match msg with

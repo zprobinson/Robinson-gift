@@ -4,6 +4,7 @@ open Elmish
 open Gift.Client
 
 Fable.Core.JsInterop.importSideEffects "./index.css"
+Fable.Core.JsInterop.importSideEffects "@fontsource/inter"
 
 #if DEBUG
 open Elmish.Debug
